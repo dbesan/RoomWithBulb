@@ -27,7 +27,7 @@ public class RawDBDemoGeoIPLocationService {
             throws IOException, GeoIp2Exception {
         InetAddress ipAddress = InetAddress.getByName(ip);
 
-        CountryResponse response = dbReader.country(ipAddress);
+        CountryResponse response = dbReader.country(InetAddress.getByName(ip));
         String countryName = response.getCountry().getName();
         return countryName;
     }

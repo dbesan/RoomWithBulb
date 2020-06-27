@@ -5,7 +5,6 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.testProj.RoomWithBulb.domain.Room;
 import com.testProj.RoomWithBulb.repo.RoomRepo;
 import com.testProj.RoomWithBulb.service.RawDBDemoGeoIPLocationService;
-import com.testProj.RoomWithBulb.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Map;
@@ -26,16 +26,16 @@ public class MainController {
     private RoomRepo roomRepo;
 
     @GetMapping("/")
-    public String main(Model model) throws IOException, GeoIp2Exception {
+    public String main(Model model, HttpServletRequest request) throws IOException, GeoIp2Exception {
         Iterable<Room> rooms = roomRepo.findAll();
         String location = "";
-        String ip = WebUtils.getClientIp();
+        String ip = request.getRemoteAddr();
         try {
             location = RawDBDemoGeoIPLocationService.getLocation(ip);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AddressNotFoundException e) {
-            e.printStackTrace();
+            location = "The address: " + ip + " is not in the database.";
         }
 
 
