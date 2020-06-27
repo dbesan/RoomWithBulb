@@ -1,5 +1,6 @@
 package com.testProj.RoomWithBulb.controller;
 
+import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.testProj.RoomWithBulb.domain.Room;
 import com.testProj.RoomWithBulb.repo.RoomRepo;
@@ -28,12 +29,13 @@ public class MainController {
     public String main(Model model) throws IOException, GeoIp2Exception {
         Iterable<Room> rooms = roomRepo.findAll();
         String location = "";
+        String ip = WebUtils.getClientIp();
         try {
-            location = RawDBDemoGeoIPLocationService.getLocation(WebUtils.getClientIp());
+            location = RawDBDemoGeoIPLocationService.getLocation(ip);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (GeoIp2Exception e) {
-            location = "localhost";
+        } catch (AddressNotFoundException e) {
+            location = "The address: " + ip + " is not in the database.";
         }
 
 
