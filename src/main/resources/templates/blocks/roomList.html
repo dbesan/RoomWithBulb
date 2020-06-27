@@ -1,0 +1,14 @@
+<div th:fragment=roomList xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="row float-center">
+        <tr th:each="room : ${allRooms}">
+            <div class="card mt-3 mr-3 ml-3 border " style="width: 20rem;">
+                <div class="card-body">
+                    <a class="card-title" th:text="${room.roomName}" th:href="'/room/'+${room.id}"/>
+                    <p class="card-text" th:text="${room.country}"/>
+                    <p class="card-text" th:text="${room.status}"/>
+                </div>
+            </div>
+        </tr>
+
+    </div>
+</div>
