@@ -18,7 +18,7 @@ public class RawDBDemoGeoIPLocationService {
     private static DatabaseReader dbReader;
 
     public RawDBDemoGeoIPLocationService() throws IOException {
-        File database = new File("src\\main\\resources\\GeoLite\\GeoLite2-Country.mmdb");
+        File database = new File("src/main/resources/GeoLite/GeoLite2-Country.mmdb");
         dbReader = new DatabaseReader.Builder(database).build();
     }
 
