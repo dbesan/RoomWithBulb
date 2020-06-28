@@ -37,15 +37,16 @@ public class MainController {
     @PostMapping("/")
     public String add(@Valid Room room, BindingResult bindingResult, HttpServletRequest request,
                       Model model) throws GeoIp2Exception {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
-            model.mergeAttributes(errorsMap);
-        } else {
-            roomRepo.save(room);
-            Iterable<Room> rooms = roomRepo.findAll();
-            model.addAttribute("allRooms", rooms);
+        if (room.getStatus() == 1 || room.getStatus() == 0) {
+            if (bindingResult.hasErrors()) {
+                Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+                model.mergeAttributes(errorsMap);
+            } else {
+                roomRepo.save(room);
+                Iterable<Room> rooms = roomRepo.findAll();
+                model.addAttribute("allRooms", rooms);
+            }
         }
-
         Iterable<Room> rooms = roomRepo.findAll();
         model.addAttribute("location", LocationUtils.getLocation(request));
         model.addAttribute("allCountries", LocationUtils.getAllCountries(Locale.ENGLISH));

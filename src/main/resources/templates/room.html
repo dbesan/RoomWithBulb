@@ -12,7 +12,14 @@
                 <button type="submit" class="btn btn-primary mt-5">Switch!</button>
             </div>
         </form>
-        <div th:text="${room.status}==1?'Turned on':'Turned off'"></div>
+        <div>Bulb is:</div>
+        <div id='target' onLoad='refresh()' th:text="${room.status}==1?'Turned on':'Turned off'"></div>
     </div>
     <div th:insert="blocks/lower :: lower"></div>
+    <script type='text/javascript'>
+        function refresh() {
+            setTimeout(window.location.reload(), 100);
+        }
+
+    </script>
 </th:block>
