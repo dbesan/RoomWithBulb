@@ -1,6 +1,7 @@
 <th:block xmlns:th="http://www.w3.org/1999/xhtml">
     <div th:insert="blocks/common :: common"></div>
     <div class="container mt-5">
+        <h1>Rooms with bulb application</h1>
         <a class="btn btn-primary" data-toggle="collapse" href="#inputForm" role="button" aria-expanded="false"
            aria-controls="collapseExample">
             Add new room.
@@ -9,7 +10,6 @@
             <div class="form-group mt-3">
                 <form th:action="@{/}" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-
                         <div class="form-group">
                             <input type="text" th:class="${roomNameError}?'form-control is-invalid':'form-control'"
                                    name="roomName" placeholder="Room name">
@@ -17,10 +17,9 @@
                                 <td th:text="${roomNameError}">
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div>
-                                <select name="status" id="status" class="form-control">
+                                <select name="status" id="status" class="form-control" placeholder="Bulb status">
                                     <option th:value="0" th:text="'Turned off'"></option>
                                     <option th:value="1" th:text="'Turned on'"></option>
                                 </select>
@@ -28,7 +27,7 @@
                         </div>
                         <div class="form-group">
                             <div>
-                                <select name="country" id="country" class="form-control">
+                                <select name="country" id="country" class="form-control" placeholder="Room's country">
                                     <option th:each="country:${allCountries}" th:value="${country}"
                                             th:text="${country}"></option>
                                 </select>
@@ -36,11 +35,9 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary mt-5">Add</button>
-
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
         <div th:insert="blocks/roomList :: roomList"></div>

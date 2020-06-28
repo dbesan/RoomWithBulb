@@ -60,10 +60,7 @@ public class MainController {
             Model model
 
     ) {
-
-
         model.addAttribute("room", room);
-
         return "room";
     }
 
