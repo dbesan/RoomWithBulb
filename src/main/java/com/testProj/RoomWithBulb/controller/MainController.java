@@ -1,11 +1,9 @@
 package com.testProj.RoomWithBulb.controller;
 
-import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.testProj.RoomWithBulb.domain.Room;
 import com.testProj.RoomWithBulb.repo.RoomRepo;
-import com.testProj.RoomWithBulb.service.RawDBDemoGeoIPLocationService;
-import com.testProj.RoomWithBulb.utils.CountryList;
+import com.testProj.RoomWithBulb.utils.LocationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
@@ -28,26 +25,18 @@ public class MainController {
     private RoomRepo roomRepo;
 
     @GetMapping("/")
-    public String main(Model model, HttpServletRequest request) throws IOException, GeoIp2Exception {
+    public String main(Model model, HttpServletRequest request) throws GeoIp2Exception {
         Iterable<Room> rooms = roomRepo.findAll();
-        String location = "";
-        String ip = request.getRemoteAddr();
-        try {
-            location = RawDBDemoGeoIPLocationService.getLocation(ip);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (AddressNotFoundException e) {
-            location = "The address: " + ip + " is not in the database.";
-        }
-        model.addAttribute("allCountries", CountryList.getAllCountries(Locale.ENGLISH));
-        model.addAttribute("location", location);
+        model.addAttribute("location", LocationUtils.getLocation(request));
+        model.addAttribute("allCountries", LocationUtils.getAllCountries(Locale.ENGLISH));
         model.addAttribute("allRooms", rooms);
         return "main";
     }
 
+
     @PostMapping("/")
-    public String add(@Valid Room room, BindingResult bindingResult,
-                      Model model) {
+    public String add(@Valid Room room, BindingResult bindingResult, HttpServletRequest request,
+                      Model model) throws GeoIp2Exception {
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
@@ -58,7 +47,8 @@ public class MainController {
         }
 
         Iterable<Room> rooms = roomRepo.findAll();
-        model.addAttribute("allCountries", CountryList.getAllCountries(Locale.ENGLISH));
+        model.addAttribute("location", LocationUtils.getLocation(request));
+        model.addAttribute("allCountries", LocationUtils.getAllCountries(Locale.ENGLISH));
         model.addAttribute("allRooms", rooms);
 
         return "main";
