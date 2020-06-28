@@ -1,7 +1,8 @@
 <th:block xmlns:th="http://www.w3.org/1999/xhtml">
     <div th:insert="blocks/common :: common"></div>
-    <a href="/">К списку комнат</a>
-    <div class="form-group mt-3">
+
+    <div class="container mt-5">
+        <a href="/">К списку комнат</a>
         <form th:action="@{'/room/'+${room.id}}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="text" class="form-control' " hidden="true"

@@ -3,12 +3,34 @@
         <tr th:each="room : ${allRooms}">
             <div class="card mt-3 mr-3 ml-3 border " style="width: 20rem;">
                 <div class="card-body">
-                    <a class="card-title" th:text="${room.roomName}" th:href="'/room/'+${room.id}"/>
+                    <th:block th:if="${location}==${room.country}">
+                        <a class="card-title" th:text="${room.roomName}" th:href="'/room/'+${room.id}"/>
+                    </th:block>
+                    <th:block th:if="${location}!=${room.country}">
+                        <a class="card-title" th:text="${room.roomName}" href="#restrModal" data-toggle="modal"/>
+                    </th:block>
                     <p class="card-text" th:text="${room.country}"/>
-                    <p class="card-text" th:text="${room.status}"/>
+                    <p class="card-text" th:text="${room.status}==1?'Turned on':'Turned off'"/>
                 </div>
             </div>
         </tr>
+    </div>
 
+
+    <div id="restrModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Access denied</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <h5>This room is available from another country.</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

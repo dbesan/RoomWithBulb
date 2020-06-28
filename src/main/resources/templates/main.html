@@ -19,18 +19,19 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="text" th:class="${statusError}?'form-control is-invalid':'form-control'"
-                                   name="status" placeholder="status">
-                            <div class="alert alert-danger" role="alert" style="height: 40px" th:if="${statusError}">
-                                <td th:text="${statusError}">
+                            <div>
+                                <select name="status" id="status" class="form-control">
+                                    <option th:value="0" th:text="'Turned off'"></option>
+                                    <option th:value="1" th:text="'Turned on'"></option>
+                                </select>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <input type="text" th:class="${countryError}?'form-control is-invalid':'form-control'"
-                                   name="country" placeholder="country">
-                            <div class="alert alert-danger" role="alert" style="height: 40px" th:if="${statusError}">
-                                <td th:text="${statusError}">
+                            <div>
+                                <select name="country" id="country" class="form-control">
+                                    <option th:each="country:${allCountries}" th:value="${country}"
+                                            th:text="${country}"></option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -39,11 +40,11 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
-
+        <div th:insert="blocks/roomList :: roomList"></div>
+        <div class="mt-5" th:text="'Your current location is: ' + ${location}"></div>
     </div>
-    <div th:insert="blocks/roomList :: roomList"></div>
-    <div th:text="${location}"></div>
     <div th:insert="blocks/lower :: lower"></div>
 </th:block>
