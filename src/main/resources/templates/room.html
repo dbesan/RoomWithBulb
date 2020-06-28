@@ -13,12 +13,13 @@
             </div>
         </form>
         <div>Bulb is:</div>
-        <div id='target' onLoad='refresh()' th:text="${room.status}==1?'Turned on':'Turned off'"></div>
+        <div id='status' onLoad='refresh()' th:text="${room.status}==1?'Turned on':'Turned off'"></div>
     </div>
     <div th:insert="blocks/lower :: lower"></div>
     <script type='text/javascript'>
-        function refresh() {
-            setTimeout(window.location.reload(), 100);
+        function refreshDiv() {
+            document.getElementById('status');
+            var refresher = setTimeout("refreshDiv()", 1000);
         }
 
     </script>
