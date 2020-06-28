@@ -57,11 +57,20 @@ public class MainController {
     @GetMapping("/room/{room}")
     public String room(
             @PathVariable Room room,
-            Model model
+            Model model,
+            HttpServletRequest request
 
-    ) {
-        model.addAttribute("room", room);
-        return "room";
+    ) throws GeoIp2Exception {
+        String answer = "";
+        String CurrentLocation = LocationUtils.getLocation(request);
+        model.addAttribute("location", CurrentLocation);
+        if (room.getCountry().equals(CurrentLocation)) {
+            model.addAttribute("room", room);
+            answer = "room";
+        } else {
+            answer = "denided";
+        }
+        return answer;
     }
 
     @PostMapping("/room/{room}")
