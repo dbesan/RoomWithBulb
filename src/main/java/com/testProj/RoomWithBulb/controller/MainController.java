@@ -72,8 +72,6 @@ public class MainController {
         } else {
             answer = "denided";
         }
-        model.addAttribute("room", room);
-        answer = "room";
         return answer;
     }
 
