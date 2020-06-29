@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -78,10 +77,10 @@ public class MainController {
         return answer;
     }
 
-    @PostMapping("/room/{room}")
+    @PostMapping("/room")
     public String switchBulb(
             @RequestParam("status") Integer status,
-            @PathVariable Room room,
+            @RequestParam(name = "id") Room room,
             Model model
     ) {
 
@@ -89,7 +88,7 @@ public class MainController {
             room.setStatus(status);
         }
         roomRepo.save(room);
-
+        model.addAttribute(room);
 
         return "room";
     }

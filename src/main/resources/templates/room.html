@@ -2,8 +2,9 @@
     <div th:insert="blocks/common :: common"></div>
 
     <div class="container mt-5">
-        <a href="/">К списку комнат</a>
-        <form th:action="@{'/room/'+${room.id}}" method="post" enctype="multipart/form-data">
+        <a href="/">All room's</a>
+        <h4 th:text="'Room name is '+ ${room.roomName}"></h4>
+        <form th:action="@{'/room?id='+${room.id}}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="text" class="form-control' " hidden="true"
                        name="status" th:value="${room.status}==1?'0':'1'">
@@ -13,15 +14,27 @@
             </div>
         </form>
         <div>Bulb is:</div>
-        <div id='status' th:text="${room.status}==1?'Turned on':'Turned off'"></div>
+        <div id='statusChanging'></div>
 
     </div>
     <div th:insert="blocks/lower :: lower"></div>
 
     <script type='text/javascript'>
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/room/' + "${room}" + '/status', true);
-        xhr.send();
-        setInterval(updateStatus, 1000);
+        function statusUpdate() {
+            var xhttp = new XMLHttpRequest();
+            let params = (new URL(document.location)).searchParams;
+            let id = params.get("id");
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("statusChanging").innerHTML =
+                        this.responseText;
+                }
+            };
+            xhttp.open('GET', '/room' + '/status' + '?id=' + id, true);
+            xhttp.send();
+        }
+
+        setInterval(statusUpdate, 500);
+
     </script>
 </th:block>

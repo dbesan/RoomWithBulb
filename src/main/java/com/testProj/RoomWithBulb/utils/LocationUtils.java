@@ -2,7 +2,7 @@ package com.testProj.RoomWithBulb.utils;
 
 import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
-import com.testProj.RoomWithBulb.service.RawDBDemoGeoIPLocationService;
+import com.testProj.RoomWithBulb.service.RawDBGeoIPLocationService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class LocationUtils {
         String location = "";
         String ip = request.getRemoteAddr();
         try {
-            location = RawDBDemoGeoIPLocationService.getLocation(ip);
+            location = RawDBGeoIPLocationService.getLocation(ip);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (AddressNotFoundException e) {

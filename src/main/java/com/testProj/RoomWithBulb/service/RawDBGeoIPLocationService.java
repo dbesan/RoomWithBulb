@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 @Service
-public class RawDBDemoGeoIPLocationService {
+public class RawDBGeoIPLocationService {
     @Value("classpath:GeoLite/GeoLite2-Country.mmdb")
     Resource resourceFile;
     private static DatabaseReader dbReader;
 
-    public RawDBDemoGeoIPLocationService() throws IOException {
+    public RawDBGeoIPLocationService() throws IOException {
         File database = new File("src/main/resources/GeoLite/GeoLite2-Country.mmdb");
         dbReader = new DatabaseReader.Builder(database).build();
     }
