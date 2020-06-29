@@ -4,7 +4,7 @@
             <div class="card mt-3 mr-3 ml-3 border " style="width: 20rem;">
                 <div class="card-body">
                     <th:block th:if="${location}==${room.country}">
-                        <a class="card-title" th:text="${room.roomName}" th:href="'/room/'+${room.id}"/>
+                        <a class="card-title" th:text="${room.roomName}" th:href="'/room?id='+${room.id}"/>
                     </th:block>
                     <th:block th:if="${location}!=${room.country}">
                         <a class="card-title" th:text="${room.roomName}" href="#restrModal" data-toggle="modal"/>

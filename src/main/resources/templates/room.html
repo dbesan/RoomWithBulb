@@ -13,14 +13,15 @@
             </div>
         </form>
         <div>Bulb is:</div>
-        <div id='status' onLoad='refresh()' th:text="${room.status}==1?'Turned on':'Turned off'"></div>
+        <div id='status' th:text="${room.status}==1?'Turned on':'Turned off'"></div>
+
     </div>
     <div th:insert="blocks/lower :: lower"></div>
-    <script type='text/javascript'>
-        function refreshDiv() {
-            document.getElementById('status');
-            var refresher = setTimeout("refreshDiv()", 1000);
-        }
 
+    <script type='text/javascript'>
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/room/' + "${room}" + '/status', true);
+        xhr.send();
+        setInterval(updateStatus, 1000);
     </script>
 </th:block>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,22 +56,25 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/room/{room}")
+    @GetMapping("/room")
     public String room(
-            @PathVariable Room room,
+            @RequestParam(name = "id") Room room,
             Model model,
             HttpServletRequest request
 
-    ) throws GeoIp2Exception {
+    ) throws GeoIp2Exception, IOException {
         String answer = "";
         String CurrentLocation = LocationUtils.getLocation(request);
         model.addAttribute("location", CurrentLocation);
-        if (room.getCountry().equals(CurrentLocation)) {
-            model.addAttribute("room", room);
-            answer = "room";
-        } else {
-            answer = "denided";
-        }
+        model.addAttribute("liveStatus", room.getStatus());
+//        if (room.getCountry().equals(CurrentLocation)) {
+//            model.addAttribute("room", room);
+//            answer = "room";
+//        } else {
+//            answer = "denided";
+//        }
+        model.addAttribute("room", room);
+        answer = "room";
         return answer;
     }
 
@@ -80,6 +84,7 @@ public class MainController {
             @PathVariable Room room,
             Model model
     ) {
+
         if (!StringUtils.isEmpty(status)) {
             room.setStatus(status);
         }
