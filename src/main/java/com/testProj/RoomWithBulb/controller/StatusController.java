@@ -11,12 +11,6 @@ public class StatusController {
     @GetMapping("/room/status")
     public String getStatus(@RequestParam(name = "id") Room room,
                             Model model) {
-        String answer = "";
-        if (room.getStatus() == 1) {
-            answer = "Turned on";
-        } else if (room.getStatus() == 0) {
-            answer = "Turned off";
-        }
-        return answer;
+        return String.valueOf(room.getStatus());
     }
 }

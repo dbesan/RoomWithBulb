@@ -26,8 +26,14 @@
             let id = params.get("id");
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("statusChanging").innerHTML =
-                        this.responseText;
+                    if (this.responseText == 1) {
+                        document.getElementById("statusChanging").innerHTML =
+                            "Turned on";
+                    } else if (this.responseText == 0) {
+                        document.getElementById("statusChanging").innerHTML =
+                            "Turned off";
+                    }
+
                 }
             };
             xhttp.open('GET', '/room' + '/status' + '?id=' + id, true);
