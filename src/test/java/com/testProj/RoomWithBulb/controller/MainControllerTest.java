@@ -27,8 +27,8 @@ class MainControllerTest {
 
     @Test
     public void shouldReturnDenidedMessageFromRoomPage() throws Exception {
+//        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get("/").requestAttr("RemoteAddr", "151.106.8.135");
         this.mockMvc.perform(get("/room?id=1")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Access denided!")));
     }
-    
 }
