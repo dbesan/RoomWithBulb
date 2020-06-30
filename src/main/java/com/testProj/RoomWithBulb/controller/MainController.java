@@ -66,14 +66,12 @@ public class MainController {
         String CurrentLocation = LocationUtils.getLocation(request);
         model.addAttribute("location", CurrentLocation);
         model.addAttribute("liveStatus", room.getStatus());
-//        if (room.getCountry().equals(CurrentLocation)) {
-//            model.addAttribute("room", room);
-//            answer = "room";
-//        } else {
-//            answer = "denided";
-//        }
-        model.addAttribute("room", room);
-        answer = "room";
+        if (room.getCountry().equals(CurrentLocation)) {
+            model.addAttribute("room", room);
+            answer = "room";
+        } else {
+            answer = "denided";
+        }
         return answer;
     }
 
